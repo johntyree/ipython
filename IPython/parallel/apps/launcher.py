@@ -672,11 +672,11 @@ class SSHClusterLauncher(SSHLauncher, ClusterAppMixin):
     
     @staticmethod
     def _strip_home(path):
-        """turns /home/you/.ipython/profile_foo into .ipython/profile_foo"""
+        """turns $HOME/.ipython/profile_foo into .ipython/profile_foo"""
         home = get_home_dir()
-        if not home.endswith('/'):
-            home = home+'/'
-        
+        if not home.endswith(os.path.sep):
+            home = os.path.join(home, '')
+
         if path.startswith(home):
             return path[len(home):]
         else:
